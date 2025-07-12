@@ -34,7 +34,20 @@ const remove = async (id) => {
     return false;
 }
 
-// Exportar el repositorio como objeto
-const repository = { findAll, findOne, create, update, remove }
+const searchByName = async (name) => {
+    // Busca por coincidencias parciales, ignora mayúsculas/minúsculas
+    return await Producto.findAll({
+        where: {
+            nombre: {
+                [Op.iLike]: `%${name}%`  
+            }
+        }
+    });
+};
+
+import { Op } from 'sequelize'; 
+
+const repository = { findAll, findOne, create, update, remove, searchByName }
+
 
 export default repository;
